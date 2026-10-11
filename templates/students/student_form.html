@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} | Student Dashboard{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="card card-primary"><div class="card-header"><h3 class="card-title">Student details</h3></div>
+  <form method="post"><div class="card-body">{% csrf_token %}
+    {% for field in form %}<div class="form-group"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}{% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}</div>{% endfor %}
+    {% for error in form.non_field_errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+  </div><div class="card-footer"><button class="btn btn-primary" type="submit">Save student</button> <a class="btn btn-default" href="{% url 'student_list' %}">Cancel</a></div></form>
+</div>
+{% endblock %}

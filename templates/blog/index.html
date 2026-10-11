@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+
+        <style>
+            .blog-container {
+                border: 1px solid #3c7e7e;
+                padding: 10px;
+                margin-bottom:10px 10px;
+                border-radius: 5px;
+                background-color: #e6e5e5af;
+            }
+
+            .blog-container h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .blog-container p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        </style>
+    </head>
+    <body>
+         <p> this is index of blog app </p>
+
+            {%for blog_post in blog_posts%}
+            <div class="blog-container">
+                <h1>{{ blog_post.title }}</h1>
+                <p>{{ blog_post.content }}</p>
+                <p>{{ blog_post.author }}</p>
+                <p><small>Posted on: {{ blog_post.date_posted }}</small></p>
+            </div>
+         {%endfor%}
+
+        <script src="" async defer></script>
+    </body>
+</html>

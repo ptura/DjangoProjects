@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Student Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-3 col-6"><div class="small-box bg-info"><div class="inner"><h3>{{ student_count }}</h3><p>Students</p></div><div class="icon"><i class="fas fa-user-graduate"></i></div><a href="{% url 'student_list' %}" class="small-box-footer">View students <i class="fas fa-arrow-circle-right"></i></a></div></div>
+  <div class="col-lg-3 col-6"><div class="small-box bg-success"><div class="inner"><h3>{{ subject_count }}</h3><p>Subjects</p></div><div class="icon"><i class="fas fa-book"></i></div><a href="{% url 'subject_list' %}" class="small-box-footer">Manage subjects <i class="fas fa-arrow-circle-right"></i></a></div></div>
+  <div class="col-lg-3 col-6"><div class="small-box bg-warning"><div class="inner"><h3>{{ mark_count }}</h3><p>Marks recorded</p></div><div class="icon"><i class="fas fa-clipboard-check"></i></div><a href="{% url 'mark_create' %}" class="small-box-footer">Enter a mark <i class="fas fa-arrow-circle-right"></i></a></div></div>
+  <div class="col-lg-3 col-6"><div class="small-box bg-danger"><div class="inner"><h3>{{ overall_average }}<sup style="font-size: 20px">%</sup></h3><p>Overall average</p></div><div class="icon"><i class="fas fa-chart-line"></i></div><a href="{% url 'charts' %}" class="small-box-footer">View charts <i class="fas fa-arrow-circle-right"></i></a></div></div>
+</div>
+<div class="row">
+  <section class="col-lg-7 connectedSortable">
+    <div class="card"><div class="card-header"><h3 class="card-title"><i class="fas fa-trophy mr-1"></i>Top students</h3><div class="card-tools"><a class="btn btn-tool" href="{% url 'results' %}">All results</a></div></div>
+      <div class="card-body table-responsive p-0"><table class="table table-hover text-nowrap"><thead><tr><th>Position</th><th>Student</th><th>Total</th><th>Average</th><th>Grade</th></tr></thead><tbody>
+      {% for row in top_students %}<tr><td>{{ row.position }}</td><td>{{ row.student.full_name }}</td><td>{{ row.total_score }} / {{ row.total_possible }}</td><td>{{ row.average }}%</td><td>{{ row.grade }}</td></tr>{% empty %}<tr><td colspan="5" class="text-center p-4">Add students, subjects, and marks to see results.</td></tr>{% endfor %}
+      </tbody></table></div>
+    </div>
+  </section>
+  <section class="col-lg-5 connectedSortable">
+    <div class="card"><div class="card-header"><h3 class="card-title"><i class="fas fa-clock mr-1"></i>Recent marks</h3></div>
+      <div class="card-body p-0"><ul class="products-list product-list-in-card pl-2 pr-2">
+      {% for mark in recent_marks %}<li class="item"><div class="product-info ml-0"><a href="{% url 'results' %}" class="product-title">{{ mark.student.full_name }} <span class="badge badge-primary float-right">{{ mark.percentage }}%</span></a><span class="product-description">{{ mark.subject.name }} · {{ mark.assessment }} ({{ mark.score }}/{{ mark.out_of }})</span></div></li>{% empty %}<li class="item p-3">No marks recorded yet.</li>{% endfor %}
+      </ul></div>
+    </div>
+  </section>
+</div>
+{% endblock %}

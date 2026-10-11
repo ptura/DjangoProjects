@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Charts | Student Dashboard{% endblock %}
+{% block page_title %}Class performance charts{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-7"><div class="card"><div class="card-header"><h3 class="card-title">Class average by subject</h3></div><div class="card-body"><canvas id="subject-chart" height="130"></canvas>{% if not subject_labels %}<p class="text-muted mb-0">Record marks to see subject averages.</p>{% endif %}</div></div></div>
+  <div class="col-lg-5"><div class="card"><div class="card-header"><h3 class="card-title">Top students</h3></div><div class="card-body"><canvas id="top-chart" height="190"></canvas>{% if not top_labels %}<p class="text-muted mb-0">Record marks to see student averages.</p>{% endif %}</div></div></div>
+</div>
+{{ subject_labels|json_script:"subject-labels" }}{{ subject_averages|json_script:"subject-averages" }}
+{{ top_labels|json_script:"top-labels" }}{{ top_averages|json_script:"top-averages" }}
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'Blog/student_dashboard/plugins/chart.js/Chart.min.js' %}"></script>
+<script>
+  const subjectLabels = JSON.parse(document.getElementById('subject-labels').textContent);
+  const subjectAverages = JSON.parse(document.getElementById('subject-averages').textContent);
+  const topLabels = JSON.parse(document.getElementById('top-labels').textContent);
+  const topAverages = JSON.parse(document.getElementById('top-averages').textContent);
+  if (subjectLabels.length) new Chart(document.getElementById('subject-chart'), {type: 'bar', data: {labels: subjectLabels, datasets: [{label: 'Class average (%)', data: subjectAverages, backgroundColor: '#007bff'}]}, options: {scales: {yAxes: [{ticks: {beginAtZero: true, max: 100}}]}}});
+  if (topLabels.length) new Chart(document.getElementById('top-chart'), {type: 'horizontalBar', data: {labels: topLabels, datasets: [{label: 'Average (%)', data: topAverages, backgroundColor: '#28a745'}]}, options: {scales: {xAxes: [{ticks: {beginAtZero: true, max: 100}}]}}});
+</script>
+{% endblock %}

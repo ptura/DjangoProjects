@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Student Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'Blog/student_dashboard/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Blog/student_dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Blog/student_dashboard/dist/css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Toggle navigation"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'dashboard' %}" class="nav-link">Student Dashboard</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto align-items-center">
+      <li class="nav-item"><span class="nav-link">{{ request.user.get_username }}</span></li>
+      <li class="nav-item">
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+          {% csrf_token %}<button class="btn btn-link nav-link" type="submit">Sign out</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{% url 'dashboard' %}" class="brand-link"><span class="brand-text font-weight-light ml-3">Student Dashboard</span></a>
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+          <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p></a></li>
+          <li class="nav-item"><a href="{% url 'student_list' %}" class="nav-link"><i class="nav-icon fas fa-user-graduate"></i><p>Students</p></a></li>
+          <li class="nav-item"><a href="{% url 'subject_list' %}" class="nav-link"><i class="nav-icon fas fa-book"></i><p>Subjects</p></a></li>
+          <li class="nav-item"><a href="{% url 'mark_create' %}" class="nav-link"><i class="nav-icon fas fa-edit"></i><p>Enter marks</p></a></li>
+          <li class="nav-item"><a href="{% url 'results' %}" class="nav-link"><i class="nav-icon fas fa-poll"></i><p>Results</p></a></li>
+          <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><i class="nav-icon fas fa-chart-bar"></i><p>Charts</p></a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid"><div class="row mb-2"><div class="col-sm-6"><h1>{% block page_title %}Dashboard{% endblock %}</h1></div></div></div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        {% for message in messages %}
+          <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible" role="alert">
+            {{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+      </div>
+    </section>
+  </div>
+  <footer class="main-footer"><strong>Student Dashboard</strong><div class="float-right d-none d-sm-inline-block">Django · AdminLTE</div></footer>
+</div>
+<script src="{% static 'Blog/student_dashboard/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'Blog/student_dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Blog/student_dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'Blog/student_dashboard/dist/js/script.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

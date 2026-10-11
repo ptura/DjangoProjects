@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Results | Student Dashboard{% endblock %}
+{% block page_title %}Results and report cards{% endblock %}
+{% block content %}
+<div class="card"><div class="card-header"><h3 class="card-title">Student totals, averages, grades, and positions</h3><div class="card-tools"><a href="{% url 'mark_create' %}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Enter marks</a></div></div>
+  <div class="card-body table-responsive"><table class="table table-bordered table-striped"><thead><tr><th>Position</th><th>Student number</th><th>Student</th><th>Marks</th><th>Total</th><th>Average</th><th>Grade</th></tr></thead>
+    <tbody>{% for row in results %}<tr><td>{{ row.position }}</td><td>{{ row.student.student_number }}</td><td>{{ row.student.full_name }}</td><td>{{ row.mark_count }}</td><td>{{ row.total_score }} / {{ row.total_possible }}</td><td>{{ row.average }}%</td><td><span class="badge badge-{% if row.grade == 'A' or row.grade == 'B' %}success{% elif row.grade == 'C' or row.grade == 'D' %}warning{% else %}danger{% endif %}">{{ row.grade }}</span></td></tr>{% empty %}<tr><td colspan="7" class="text-center">There are no results yet. Add students, subjects, then marks.</td></tr>{% endfor %}</tbody>
+  </table></div>
+</div>
+<div class="callout callout-info"><h5>Grade scale</h5><p class="mb-0">A: 80–100%, B: 70–79%, C: 60–69%, D: 50–59%, F: below 50%. Position ranks students by average; ties share the same position.</p></div>
+{% endblock %}

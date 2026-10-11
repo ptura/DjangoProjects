@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       <p> this is page to dislay students marks </p>
+
+       <table border=1.5> 
+        <tr>
+            <th> Name </th>
+            <th> Reg_Number </th>
+            <th> Marks </th>
+        </tr>
+       {% for name, reg_no, marks in student_marks %}
+           <tr>
+               <td>{{ name }}</td>
+               <td>{{ reg_no }}</td>
+               <td>{{ marks }}</td>
+           </tr>
+       {% endfor %}
+         </table>
+
+       <script src="" async defer></script>
+
+    </body>
+</html>

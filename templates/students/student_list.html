@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Students | Student Dashboard{% endblock %}
+{% block page_title %}Students{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'Blog/student_dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Student register</h3><div class="card-tools"><a class="btn btn-primary btn-sm" href="{% url 'student_create' %}"><i class="fas fa-plus"></i> Add student</a></div></div>
+  <div class="card-body table-responsive">
+    <table id="students-table" class="table table-bordered table-striped">
+      <thead><tr><th>Student number</th><th>Name</th><th>Class</th><th>Email</th><th>Marks recorded</th></tr></thead>
+      <tbody>{% for student in students %}<tr><td>{{ student.student_number }}</td><td>{{ student.full_name }}</td><td>{{ student.class_name }}</td><td>{{ student.email|default:"—" }}</td><td>{{ student.mark_count }}</td></tr>{% empty %}<tr><td colspan="5" class="text-center">No students yet. Add the first student to begin.</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'Blog/student_dashboard/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'Blog/student_dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script>$(function () { if ($('#students-table tbody tr').length && $('#students-table tbody td').length !== 1) { $('#students-table').DataTable({ autoWidth: false }); } });</script>
+{% endblock %}

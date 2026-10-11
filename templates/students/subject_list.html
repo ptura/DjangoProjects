@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Subjects | Student Dashboard{% endblock %}
+{% block page_title %}Subjects{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-5"><div class="card card-primary"><div class="card-header"><h3 class="card-title">Add subject</h3></div><form method="post"><div class="card-body">{% csrf_token %}
+    {% for field in form %}<div class="form-group"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}</div>{% endfor %}
+  </div><div class="card-footer"><button class="btn btn-primary" type="submit">Save subject</button></div></form></div></div>
+  <div class="col-md-7"><div class="card"><div class="card-header"><h3 class="card-title">Subject list</h3></div><div class="card-body table-responsive p-0"><table class="table table-hover"><thead><tr><th>Code</th><th>Subject</th><th>Marks</th></tr></thead><tbody>
+    {% for subject in subjects %}<tr><td>{{ subject.code }}</td><td>{{ subject.name }}</td><td>{{ subject.mark_count }}</td></tr>{% empty %}<tr><td colspan="3" class="text-center p-3">No subjects yet.</td></tr>{% endfor %}
+  </tbody></table></div></div></div>
+</div>
+{% endblock %}

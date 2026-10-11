@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff sign in | Student Dashboard</title>
+  <link rel="stylesheet" href="{% static 'Blog/student_dashboard/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Blog/student_dashboard/dist/css/style.css' %}">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo"><b>Student</b> Dashboard</div>
+  <div class="card"><div class="card-body login-card-body">
+    <p class="login-box-msg">Sign in with your teacher or admin account</p>
+    {% if form.errors %}<div class="alert alert-danger">Your username or password was not accepted, or this account does not have staff access.</div>{% endif %}
+    <form method="post">{% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="input-group mb-3"><input class="form-control" type="text" name="{{ form.username.name }}" placeholder="Username" autocomplete="username" required autofocus><div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div></div>
+      <div class="input-group mb-3"><input class="form-control" type="password" name="{{ form.password.name }}" placeholder="Password" autocomplete="current-password" required><div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div></div>
+      <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+    <p class="mt-3 mb-0 text-muted">Staff accounts are managed in Django Admin.</p>
+  </div></div>
+</div>
+</body>
+</html>

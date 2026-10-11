@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student marks as JSON</title>
+</head>
+<body>
+    <h1>Student marks from Django JSON data</h1>
+    <p>The data below is passed from the Django view as JSON and read by JavaScript.</p>
+    <ul id="student-list"></ul>
+
+    {{ student_marks|json_script:"student-marks-data" }}
+    <script>
+        const students = JSON.parse(
+            document.getElementById("student-marks-data").textContent
+        );
+        const list = document.getElementById("student-list");
+
+        students.forEach((student) => {
+            const item = document.createElement("li");
+            item.textContent = `${student.name} - ${student.reg_no} - ${student.marks}`;
+            list.appendChild(item);
+        });
+    </script>
+</body>
+</html>
