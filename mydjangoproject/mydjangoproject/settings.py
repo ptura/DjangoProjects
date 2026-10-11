@@ -81,12 +81,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DjangoProject',
         'USER': 'ptura',
-        'PASSWORD': PASSWORD, 
+        'PASSWORD': PASSWORD,
         'HOST': 'djangoproject.c34swymmyaap.eu-north-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
-
 
 
 # Password validation
